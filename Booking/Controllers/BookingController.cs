@@ -23,8 +23,10 @@ namespace Booking.Controllers
         [Route("/FlightBookings")]
         public IEnumerable<Flight_Bookings> GetFlightBookings()
         {
-            return _context.FlightBookingsList.ToList();
+            return _context.Flight_Booking.ToList();
         }
+
+
     }
 
 }

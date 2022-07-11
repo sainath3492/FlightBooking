@@ -13,6 +13,6 @@ namespace Booking.Database
         {
             
         }
-        public DbSet<Flight_Bookings> FlightBookingsList { get; set; }
+        public DbSet<Flight_Bookings> Flight_Booking { get; set; }
     }
 }
