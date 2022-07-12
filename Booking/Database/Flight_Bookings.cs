@@ -20,7 +20,16 @@ namespace Booking.Database
         public string Return_Price { get; set; }
         public string Total_Price { get; set; }
         public string Trip_Type { get; set; }
+        public string EmailID { get; set; }
 
-   
+        public string Seat_Numbers { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+
+        public int Total_Seats { get; set; }
+
+        public string Status { get; set; }
+
+
     }
 }
