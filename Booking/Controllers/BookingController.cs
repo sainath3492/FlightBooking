@@ -26,6 +26,23 @@ namespace Booking.Controllers
             return _context.Flight_Booking.ToList();
         }
 
+        [HttpPost]
+
+        public int SaveBooking (Flight_Bookings flight_Bookings)
+        {
+           
+         
+          
+            _context.Flight_Booking.Add(flight_Bookings);
+         
+            _context.SaveChanges();
+            var data = _context.Flight_Booking.ToList().LastOrDefault();
+
+
+            return data.BookingID;
+
+        }
+
 
     }
 
