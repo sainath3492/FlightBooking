@@ -20,7 +20,7 @@ namespace Booking.Controllers
         }
 
         [HttpGet]
-        [Route("/FlightBookings")]
+      
         public IEnumerable<Flight_Bookings> GetFlightBookings()
         {
             return _context.Flight_Booking.ToList();

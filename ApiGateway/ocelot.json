@@ -1,0 +1,31 @@
+{
+  "Routes": [
+    {
+      "DownStreamPathTemplate": "/api/Booking",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 47363
+        }
+      ],
+      "Key": "catalogKey",
+      "UpstreamPathTemplate": "/Booking",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/authentication",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7987
+        }
+      ],
+      "Key": "authKey",
+      "UpstreamPathTemplate": "/authentication",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    }
+  ],
+  "GlobalConfiguration": {}
+}
