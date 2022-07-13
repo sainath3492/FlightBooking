@@ -25,6 +25,19 @@
       "Key": "authKey",
       "UpstreamPathTemplate": "/authentication",
       "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/airlinemanage",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 26434
+        }
+      ],
+      "Key": "airlineKey",
+      "UpstreamPathTemplate": "/airlinemanage",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     }
   ],
   "GlobalConfiguration": {}
