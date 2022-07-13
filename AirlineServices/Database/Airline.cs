@@ -35,5 +35,14 @@ namespace AirlineServices.Database
         public string Rows { get; set; }
 
         public string Meal { get; set; }
+
+        public string ContactNumber { get; set; }
+
+        public string ContactAddress { get; set; }
+
+        public string LogoName { get; set; }
+        public string TripType { get; set; }
+
+        public string FlightStatus { get; set; }
     }
 }
