@@ -20,7 +20,7 @@ namespace Booking.Controllers
         }
 
         [HttpGet]
-        [Route("/GetFlightBookingsByEmail")]
+        //[Route("/GetFlightBookingsByEmail")]
 
         public IEnumerable<Flight_Bookings> GetFlightBookingsByEmail(string UserEmail )
         {
@@ -29,40 +29,40 @@ namespace Booking.Controllers
            
         }
 
-        [HttpGet]
-        [Route("/GetFlightBookingsByPNR")]
-        public IEnumerable<Flight_Bookings> GetFlightBookingsByPNR( int PNR)
-        {
+        //[HttpGet]
+        //[Route("/GetFlightBookingsByPNR")]
+        //public IEnumerable<Flight_Bookings> GetFlightBookingsByPNR( int PNR)
+        //{
 
-            var data = _context.Flight_Booking.Where(u => (u.BookingID == PNR)).ToList();
+        //    var data = _context.Flight_Booking.Where(u => (u.BookingID == PNR)).ToList();
 
-            return data;
+        //    return data;
          
-        }
+        //}
 
 
 
-        [HttpPost]
-        [Route("/SaveBooking")]
-        public int SaveBooking (Flight_Bookings flight_Bookings)
-        {
-            _context.Flight_Booking.Add(flight_Bookings);
-            _context.SaveChanges();
-            var data = _context.Flight_Booking.ToList().LastOrDefault();
-            return data.BookingID;
+        //[HttpPost]
+        //[Route("/SaveBooking")]
+        //public int SaveBooking (Flight_Bookings flight_Bookings )
+        //{
+        //    _context.Flight_Booking.Add(flight_Bookings);
+        //    _context.SaveChanges();
+        //    var data = _context.Flight_Booking.ToList().LastOrDefault();
+        //    return data.BookingID;
 
-        }
+        //}
 
-        [HttpPost]
-        [Route("/CancelBooking")]
-        public int CancelBooking(int PNR)
-        {
-            var entity = _context.Flight_Booking.Find(PNR);
-            entity.Status = "Cancelled";
-            _context.SaveChanges();
-            return PNR;
+        //[HttpPost]
+        //[Route("/CancelBooking")]
+        //public int CancelBooking(int PNR)
+        //{
+        //    var entity = _context.Flight_Booking.Find(PNR);
+        //    entity.Status = "Cancelled";
+        //    _context.SaveChanges();
+        //    return PNR;
 
-        }
+        //}
 
 
     }
