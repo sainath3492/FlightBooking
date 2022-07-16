@@ -45,4 +45,10 @@ namespace AirlineServices.Database
 
         public string FlightStatus { get; set; }
     }
+
+    public class Status
+    {
+        public int AirlineID { get; set; }
+        public string StatusValue { get; set; }
+    }
 }

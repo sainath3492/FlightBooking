@@ -19,10 +19,10 @@ namespace AuthenticationService.Controllers
         {
             _context = context;
         }
-        [HttpGet]
-        public IEnumerable<UserModel> GetUsers(int userid, string password)
+        [HttpPost("/api/v1.0/flight/login")]
+        public IEnumerable<UserModel> GetUsers(login login)
         {
-            var data = _context.Users.Where(u =>(u.UserID == userid && u.Password== password)).Select(u =>
+            var data = _context.Users.Where(u =>(u.UserID == login.userid && u.Password== login.password)).Select(u =>
             new UserModel
             {
                 Name = u.Name,

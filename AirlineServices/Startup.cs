@@ -1,3 +1,4 @@
+using AirlineServices.Config;
 using AirlineServices.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,7 @@ namespace AirlineServices
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AirlineServices", Version = "v1" });
             });
+            services.AddConsulConfig();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +54,7 @@ namespace AirlineServices
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseConsul();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

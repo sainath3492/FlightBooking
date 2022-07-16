@@ -19,28 +19,10 @@ namespace AirlineServices.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        [Route("/Airline_Master")]
-
-        public IEnumerable<Airline> GetAirline_Master()
-        {
-          
-
-            try
-            {
-                var data = _context.Airline_Master.ToList();
-                return data;
-            }
-            catch (Exception ex)
-            {
-                string error = ex.Message;
-                return null;
-            }
-
-        }
+       
 
         [HttpGet]
-        [Route("/Airline_Search")]
+     
 
         public IEnumerable<Airline> Airline_Search(DateTime? StartDate,string FromPlace, string ToPlace, string TripType)
         {
@@ -78,9 +60,9 @@ namespace AirlineServices.Controllers
 
         }
 
-        [HttpPost]
-        [Route("/SaveAirline")]
-        public int SaveAirline(Airline flight_Bookings)
+        [HttpPost("/api/v1.0/flight/airline/register")]
+       
+        public int register(Airline flight_Bookings)
         {
            
 
@@ -99,9 +81,9 @@ namespace AirlineServices.Controllers
 
         }
 
-        [HttpPost]
-        [Route("/SaveExistingAirline")]
-        public int SaveExistingAirline(Airline flight_Bookings)
+        [HttpPost("/api/v1.0/flight/airline/inventory/add")]
+    
+        public int add(Airline flight_Bookings)
         {
 
             try {
@@ -130,18 +112,18 @@ namespace AirlineServices.Controllers
 
         }
 
-        [HttpPost]
-        [Route("/BlockAirline")]
-        public int BlockAirline(int AirlineID)
+        [HttpPost("/api/v1.0/flight/airline/BlockAirline")]
+     
+        public int BlockAirline(Status status)
         {
             try
             {
-                var entity = _context.Airline_Master.Find(AirlineID);
+                var entity = _context.Airline_Master.Find(status.AirlineID);
 
-                entity.FlightStatus = "Blocked";
+                entity.FlightStatus = status.StatusValue;
 
                 _context.SaveChanges();
-                return AirlineID;
+                return status.AirlineID;
 
             }
             catch(Exception ex)
@@ -149,9 +131,6 @@ namespace AirlineServices.Controllers
                 string error = ex.Message;
                 return 0;
             }
-
-          
-           
 
         }
     }

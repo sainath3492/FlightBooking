@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownStreamPathTemplate": "/api/Booking",
+      "DownStreamPathTemplate": "/api/v1.0/flight/booking/history",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
@@ -10,11 +10,51 @@
         }
       ],
       "Key": "catalogKey",
-      "UpstreamPathTemplate": "/Booking",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      "UpstreamPathTemplate": "/api/v1.0/flight/booking/history",
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownStreamPathTemplate": "/api/authentication",
+      "DownStreamPathTemplate": "/api/v1.0/flight/booking/ticket/{pnr}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 47363
+        }
+      ],
+      "Key": "catalogKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/booking/ticket/{pnr}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/booking",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 47363
+        }
+      ],
+      "Key": "catalogKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/booking",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/booking/cancel/{pnr}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 47363
+        }
+      ],
+      "Key": "catalogKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/booking/cancel/{pnr}",
+      "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    //Booking routing completed
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/login",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
         {
@@ -23,9 +63,10 @@
         }
       ],
       "Key": "authKey",
-      "UpstreamPathTemplate": "/authentication",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamPathTemplate": "/api/v1.0/flight/login",
+      "UpstreamHttpMethod": [ "POST" ]
     },
+    //authentication completed
     {
       "DownStreamPathTemplate": "/api/airlinemanage",
       "DownstreamScheme": "http",
@@ -37,7 +78,47 @@
       ],
       "Key": "airlineKey",
       "UpstreamPathTemplate": "/airlinemanage",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/airline/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 26434
+        }
+      ],
+      "Key": "airlineKey",
+      //"UpstreamPathTemplate": "/airlinemanage/SaveAirline",
+      "UpstreamPathTemplate": "/api/v1.0/flight/airline/register",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/airline/inventory/add",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 26434
+        }
+      ],
+      "Key": "airlineKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/airline/inventory/add",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/airline/BlockAirline",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 26434
+        }
+      ],
+      "Key": "airlineKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/airline/BlockAirline",
+      "UpstreamHttpMethod": [ "POST" ]
     }
   ],
   "GlobalConfiguration": {}

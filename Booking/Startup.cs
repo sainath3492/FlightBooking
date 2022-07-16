@@ -1,3 +1,4 @@
+using Booking.Config;
 using Booking.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,7 @@ namespace Booking
             { 
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking", Version = "v1" });
             });
+            services.AddConsulConfig();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +53,7 @@ namespace Booking
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseConsul();
 
             app.UseEndpoints(endpoints =>
             {
