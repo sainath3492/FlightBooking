@@ -1,4 +1,5 @@
 ﻿using Booking.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +20,7 @@ namespace Booking.Controllers
             _context = context;
         }
 
-        [HttpGet("/api/v1.0/flight/booking/history/{emailid}")]
+        [HttpGet("/api/v1.0/flight/booking/history/{emailid}"), AllowAnonymous]
       
 
         public IEnumerable<Flight_Bookings> GetFlightBookingsByEmail(string UserEmail )
@@ -29,7 +30,7 @@ namespace Booking.Controllers
            
         }
 
-        [HttpGet("/api/v1.0/flight/booking/ticket/{pnr}")]
+        [HttpGet("/api/v1.0/flight/booking/ticket/{pnr}"), AllowAnonymous]
       
         public IEnumerable<Flight_Bookings> GetFlightBookingsByPNR(int PNR)
         {
@@ -39,10 +40,10 @@ namespace Booking.Controllers
             return data;
 
         }
+        
 
 
-
-        [HttpPost("/api/v1.0/flight/booking")]
+        [HttpPost("/api/v1.0/flight/booking"), AllowAnonymous]
      
         public int SaveBooking(Flight_Bookings flight_Bookings)
         {
@@ -53,7 +54,7 @@ namespace Booking.Controllers
 
         }
 
-        [HttpDelete("/api/v1.0/flight/booking/cancel/{pnr}")]
+        [HttpDelete("/api/v1.0/flight/booking/cancel/{pnr}"), AllowAnonymous]
       
         public int CancelBooking(int PNR)
         {

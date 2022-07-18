@@ -17,11 +17,15 @@ namespace AuthenticationService.Models
         public string Role { get; set; }
 
 
+        public string Error_Msg { get; set; }
+
+
+
     }
 
     public class login
     {
-        public int userid { get; set; }
+        public string UserName { get; set; }
 
 
         public string password { get; set; }

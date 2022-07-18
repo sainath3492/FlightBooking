@@ -1,4 +1,5 @@
 ﻿using AirlineServices.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,7 +22,7 @@ namespace AirlineServices.Controllers
 
        
 
-        [HttpGet]
+        [HttpGet,AllowAnonymous]
      
 
         public IEnumerable<Airline> Airline_Search(DateTime? StartDate,string FromPlace, string ToPlace, string TripType)
@@ -60,7 +61,7 @@ namespace AirlineServices.Controllers
 
         }
 
-        [HttpPost("/api/v1.0/flight/airline/register")]
+        [HttpPost("/api/v1.0/flight/airline/register"), Authorize(Roles = "Admin")]
        
         public int register(Airline flight_Bookings)
         {
@@ -81,7 +82,7 @@ namespace AirlineServices.Controllers
 
         }
 
-        [HttpPost("/api/v1.0/flight/airline/inventory/add")]
+        [HttpPost("/api/v1.0/flight/airline/inventory/add"), Authorize(Roles = "Admin")]
     
         public int add(Airline flight_Bookings)
         {
@@ -112,7 +113,7 @@ namespace AirlineServices.Controllers
 
         }
 
-        [HttpPost("/api/v1.0/flight/airline/BlockAirline")]
+        [HttpPost("/api/v1.0/flight/airline/BlockAirline"), Authorize(Roles = "Admin")]
      
         public int BlockAirline(Status status)
         {

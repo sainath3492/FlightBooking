@@ -23,6 +23,10 @@ namespace AuthenticationService.Database
 
         public string Role { get; set; }
 
+        public byte[] PasswordHash { get; set; }
+
+        public byte[] PasswordSalt { get; set; }
+
 
         public virtual ICollection<UserRole> UserRole { get; set; }
 
