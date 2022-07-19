@@ -40,6 +40,19 @@
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
+      "DownStreamPathTemplate": "/api/v1.0/flight/Passengers",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 47363
+        }
+      ],
+      "Key": "catalogKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/Passengers",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
       "DownStreamPathTemplate": "/api/v1.0/flight/booking/cancel/{pnr}",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [

@@ -34,10 +34,19 @@ namespace Booking.Controllers
       
         public IEnumerable<Flight_Bookings> GetFlightBookingsByPNR(int PNR)
         {
+            try
+            {
+                var data = _context.Flight_Booking.Where(u => (u.BookingID == PNR)).ToList();
 
-            var data = _context.Flight_Booking.Where(u => (u.BookingID == PNR)).ToList();
+                return data;
 
-            return data;
+            }
+
+            catch (Exception ex)
+            {
+                return null;
+            }
+          
 
         }
         
@@ -47,21 +56,62 @@ namespace Booking.Controllers
      
         public int SaveBooking(Flight_Bookings flight_Bookings)
         {
-            _context.Flight_Booking.Add(flight_Bookings);
-            _context.SaveChanges();
-            var data = _context.Flight_Booking.ToList().LastOrDefault();
-            return data.BookingID;
+            try
+            {
+                _context.Flight_Booking.Add(flight_Bookings);
+                _context.SaveChanges();
 
+                var data = _context.Flight_Booking.ToList().LastOrDefault();
+                return data.BookingID;
+            }
+
+            catch (Exception ex)
+            {
+                return 0;
+            }
+          
+
+        }
+
+        [HttpPost("/api/v1.0/flight/Passengers"), AllowAnonymous]
+
+        public Boolean SavePassengers(Passengers passengers)
+        {
+            try
+            {
+                _context.Passenger_Details.Add(passengers);
+                _context.SaveChanges();
+              
+                return true;
+
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
+           
         }
 
         [HttpDelete("/api/v1.0/flight/booking/cancel/{pnr}"), AllowAnonymous]
       
         public int CancelBooking(int PNR)
         {
-            var entity = _context.Flight_Booking.Find(PNR);
-            entity.Status = "Cancelled";
-            _context.SaveChanges();
-            return PNR;
+            try
+            {
+                var entity = _context.Flight_Booking.Find(PNR);
+                entity.Status = "Cancelled";
+                _context.SaveChanges();
+                return PNR;
+
+            }
+
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
+          
 
         }
 
