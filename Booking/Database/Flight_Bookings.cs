@@ -29,6 +29,10 @@ namespace Booking.Database
 
         public string Status { get; set; }
 
+        public int FlightID { get; set; }
+
+        public string FlightName { get; set; }
+
 
     }
 

@@ -27,6 +27,11 @@ namespace AuthenticationService.Database
 
         public byte[] PasswordSalt { get; set; }
 
+        public string RefreshToken { get; set; }
+        public DateTime TokenCreated { get; set; } = DateTime.Now;
+
+        public DateTime TokenExpires { get; set; }
+
 
         public virtual ICollection<UserRole> UserRole { get; set; }
 

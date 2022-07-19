@@ -90,7 +90,7 @@
         }
       ],
       "Key": "airlineKey",
-      "UpstreamPathTemplate": "/airlinemanage",
+      "UpstreamPathTemplate": "/api/airlinemanage",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {

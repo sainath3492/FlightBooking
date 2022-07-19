@@ -115,7 +115,7 @@ namespace AirlineServices.Controllers
 
         [HttpPost("/api/v1.0/flight/airline/BlockAirline"), Authorize(Roles = "Admin")]
      
-        public int BlockAirline(Status status)
+        public string BlockAirline(Status status)
         {
             try
             {
@@ -124,15 +124,13 @@ namespace AirlineServices.Controllers
                 entity.FlightStatus = status.StatusValue;
 
                 _context.SaveChanges();
-                return status.AirlineID;
+                return "Blocked Succesfully";
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                string error = ex.Message;
-                return 0;
+                return "Internal Server Error";
             }
-
         }
     }
 }

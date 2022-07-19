@@ -20,7 +20,7 @@ namespace Booking.Controllers
             _context = context;
         }
 
-        [HttpGet("/api/v1.0/flight/booking/history/{emailid}"), AllowAnonymous]
+        [HttpGet("/api/v1.0/flight/booking/history"), AllowAnonymous]
       
 
         public IEnumerable<Flight_Bookings> GetFlightBookingsByEmail(string UserEmail )
@@ -95,20 +95,20 @@ namespace Booking.Controllers
 
         [HttpDelete("/api/v1.0/flight/booking/cancel/{pnr}"), AllowAnonymous]
       
-        public int CancelBooking(int PNR)
+        public string CancelBooking(int PNR)
         {
             try
             {
                 var entity = _context.Flight_Booking.Find(PNR);
                 entity.Status = "Cancelled";
                 _context.SaveChanges();
-                return PNR;
+                return "Cancelled";
 
             }
 
             catch (Exception ex)
             {
-                return 0;
+                return "Internal Server Error";
             }
 
           

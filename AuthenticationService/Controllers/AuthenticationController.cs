@@ -41,7 +41,20 @@ namespace AuthenticationService.Controllers
             user.UserName = login.UserName;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+
+            //if (user.UserName != login.UserName)
+            //{
+            //    return BadRequest("User Not Found");
+            //}
+
+            //if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            //{
+            //    return BadRequest("Wrong Password");
+            //}
             string Logintoken = CreateToken(user);
+
+            var RefeshToken = GenerateRefreshToken();
+            SetRefreshToken(RefeshToken);
         
             var data = _context.Users.Where(u =>(u.UserName == login.UserName && u.Password== login.password)).Select(u =>
             new UserModel
@@ -71,7 +84,53 @@ namespace AuthenticationService.Controllers
             }
         }
 
-      
+      private RefreshToken GenerateRefreshToken()
+        {
+            var refreshtoekn = new RefreshToken
+            {
+                Token = Convert.ToString(RandomNumberGenerator.GetInt32(64)),
+                Created = DateTime.Now,
+                Expires = DateTime.Now.AddDays(2)
+
+            };
+
+            return refreshtoekn;
+        }
+
+        private void SetRefreshToken(RefreshToken newRefreshToken)
+        {
+            var cookiesOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = newRefreshToken.Expires
+            };
+            Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookiesOptions);
+            user.RefreshToken = newRefreshToken.Token;
+            user.TokenCreated = newRefreshToken.Created;
+            user.TokenExpires = newRefreshToken.Expires;
+        }
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<string>> RefreshToken()
+        {
+            var refreshtoken = Request.Cookies["refreshToken"];
+            if (!user.RefreshToken.Equals(refreshtoken))
+            {
+                return Unauthorized("Invalid Refresh Token");
+
+            }
+
+            else if (user.TokenExpires < DateTime.Now)
+            {
+                return Unauthorized("Token Expired");
+            }
+
+            string token = CreateToken(user);
+            var newRefreshToekn = GenerateRefreshToken();
+            SetRefreshToken(newRefreshToekn);
+
+            return Ok(token);
+        }
+
 
         private string CreateToken(User user)
         {
