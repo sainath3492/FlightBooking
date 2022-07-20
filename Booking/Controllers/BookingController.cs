@@ -49,7 +49,16 @@ namespace Booking.Controllers
           
 
         }
-        
+
+        [HttpGet("/api/v1.0/flight/booking/GetPassengerDetails/{BookingID}"), AllowAnonymous]
+
+
+        public IEnumerable<Passengers> GetPassengerDetails(int BookingID)
+        {
+            var data = _context.Passenger_Details.Where(u => (u.FK_BookingID == BookingID)).ToList();
+            return data;
+
+        }
 
 
         [HttpPost("/api/v1.0/flight/booking"), AllowAnonymous]
@@ -114,6 +123,8 @@ namespace Booking.Controllers
           
 
         }
+
+
 
 
     }

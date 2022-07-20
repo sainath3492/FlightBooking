@@ -27,6 +27,19 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownStreamPathTemplate": "/api/v1.0/flight/booking/GetPassengerDetails/{BookingID}",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 47363
+        }
+      ],
+      "Key": "catalogKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/booking/GetPassengerDetails/{BookingID}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownStreamPathTemplate": "/api/v1.0/flight/booking",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
