@@ -51,4 +51,12 @@ namespace AirlineServices.Database
         public int AirlineID { get; set; }
         public string StatusValue { get; set; }
     }
+
+    public class UpdateSeats
+    {
+        public int AirlineID { get; set; }
+        public int BusinessseatsCount { get; set; }
+
+        public int Non_BusinessseatsCount { get; set; }
+    }
 }

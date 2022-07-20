@@ -42,15 +42,7 @@ namespace AuthenticationService.Controllers
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            //if (user.UserName != login.UserName)
-            //{
-            //    return BadRequest("User Not Found");
-            //}
-
-            //if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            //{
-            //    return BadRequest("Wrong Password");
-            //}
+          
             string Logintoken = CreateToken(user);
 
             var RefeshToken = GenerateRefreshToken();
@@ -73,8 +65,20 @@ namespace AuthenticationService.Controllers
             return data;
         }
 
-       
-      
+        [HttpPost("/api/v1.0/flight/login/register")]
+
+        public async Task<ActionResult<User>> Register(login request)
+        {
+            CreatePasswordHash(request.password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            user.UserName = request.UserName;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            return Ok(user);
+
+        }
+
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
@@ -109,7 +113,7 @@ namespace AuthenticationService.Controllers
             user.TokenCreated = newRefreshToken.Created;
             user.TokenExpires = newRefreshToken.Expires;
         }
-        [HttpPost("refresh-token")]
+        [HttpPost("/api/v1.0/flight/login/RefreshToken")]
         public async Task<ActionResult<string>> RefreshToken()
         {
             var refreshtoken = Request.Cookies["refreshToken"];

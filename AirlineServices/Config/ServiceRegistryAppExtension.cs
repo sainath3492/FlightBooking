@@ -33,10 +33,10 @@ namespace AirlineServices.Config
 
             var registration = new AgentServiceRegistration()
             {
-                ID = "BookingServiceID",
-                Name = "BookingServiceIDName",
+                ID = "AirlineServiceID",
+                Name = "AirlineServiceIDName",
                 Address = "localhost",
-                Port = 47363,
+                Port = 26434,
             };
             logger.LogInformation("Registering with Consul");
             consulClient.Agent.ServiceDeregister(registration.ID).ConfigureAwait(true);

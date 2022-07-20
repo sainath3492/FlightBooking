@@ -33,6 +33,8 @@ namespace Booking.Database
 
         public string FlightName { get; set; }
 
+        public string Discount { get; set; }
+
 
     }
 

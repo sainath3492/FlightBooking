@@ -132,5 +132,27 @@ namespace AirlineServices.Controllers
                 return "Internal Server Error";
             }
         }
+        [HttpPost("/api/v1.0/flight/airline/UpdateSeats")]
+
+        public string UpdateSeats(UpdateSeats update)
+        {
+            try
+            {
+                var entity = _context.Airline_Master.Find(update.AirlineID);
+
+                entity.Business_Seats = update.BusinessseatsCount;
+                entity.Non_Business_Seats = update.Non_BusinessseatsCount;
+
+                _context.SaveChanges();
+                return "Updated Succesfully";
+
+            }
+            catch (Exception ex)
+            {
+                return "Internal Server Error";
+            }
+        }
+
+
     }
 }

@@ -92,6 +92,32 @@
       "UpstreamPathTemplate": "/api/v1.0/flight/login",
       "UpstreamHttpMethod": [ "POST" ]
     },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/login/RefreshToken",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7987
+        }
+      ],
+      "Key": "authKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/login/RefreshToken",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/login/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7987
+        }
+      ],
+      "Key": "authKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/login/register",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
     //authentication completed
     {
       "DownStreamPathTemplate": "/api/airlinemanage",
@@ -144,6 +170,19 @@
       ],
       "Key": "airlineKey",
       "UpstreamPathTemplate": "/api/v1.0/flight/airline/BlockAirline",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownStreamPathTemplate": "/api/v1.0/flight/airline/UpdateSeats",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 26434
+        }
+      ],
+      "Key": "airlineKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/airline/UpdateSeats",
       "UpstreamHttpMethod": [ "POST" ]
     }
   ],
