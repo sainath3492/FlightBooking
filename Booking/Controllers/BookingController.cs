@@ -30,6 +30,23 @@ namespace Booking.Controllers
            
         }
 
+        [HttpGet("/api/v1.0/flight/booking/GetDiscounts"), AllowAnonymous]
+
+
+        public IEnumerable<Discounts> GetDiscounts(string Code)
+        {
+            var data = _context.Discount_Details.ToList();
+            string test = Code;
+            if (Code!="" && Code != null )
+            {
+                 data = _context.Discount_Details.Where(u => (u.Code == Code)).ToList();
+            }
+          
+         
+            return data;
+
+        }
+
         [HttpGet("/api/v1.0/flight/booking/ticket/{pnr}"), AllowAnonymous]
       
         public IEnumerable<Flight_Bookings> GetFlightBookingsByPNR(int PNR)

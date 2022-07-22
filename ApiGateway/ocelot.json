@@ -40,6 +40,19 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownStreamPathTemplate": "/api/v1.0/flight/booking/GetDiscounts",
+      "DownstreamScheme": "http",
+      "DownstreamHostandPorts": [
+        {
+          "Host": "localhost",
+          "Port": 47363
+        }
+      ],
+      "Key": "catalogKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/booking/GetDiscounts",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownStreamPathTemplate": "/api/v1.0/flight/booking",
       "DownstreamScheme": "http",
       "DownstreamHostandPorts": [
@@ -168,6 +181,7 @@
           "Port": 26434
         }
       ],
+
       "Key": "airlineKey",
       "UpstreamPathTemplate": "/api/v1.0/flight/airline/BlockAirline",
       "UpstreamHttpMethod": [ "POST" ]

@@ -16,5 +16,7 @@ namespace Booking.Database
         public DbSet<Flight_Bookings> Flight_Booking { get; set; }
 
         public DbSet<Passengers> Passenger_Details { get; set; }
+
+        public DbSet<Discounts> Discount_Details { get; set; }
     }
 }

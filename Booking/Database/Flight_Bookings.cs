@@ -50,4 +50,17 @@ namespace Booking.Database
 
         public int Age { get; set; }
     }
+
+    public class Discounts
+    {
+        [Key]
+        public int DiscoundID { get; set; }
+
+      
+        public string Code { get; set; }
+
+        public string Discount_Amount { get; set; }
+
+       
+    }
 }
