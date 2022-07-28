@@ -34,7 +34,7 @@ namespace AuthenticationService.Config
             var registration = new AgentServiceRegistration()
             {
                 ID = "AuthenticationServiceID",
-                Name = "AuthenticationServicenName",
+                Name = "AuthenticationService",
                 Address = "localhost",
                 Port = 7987,
             };

@@ -36,7 +36,7 @@ namespace ApiGateway.Config
                 ID = "ApiGatewayID",
                 Name = "ApiGateway",
                 Address = "localhost",
-                Port = 51654,
+                Port = 51655,
             };
             logger.LogInformation("Registering with Consul");
             consulClient.Agent.ServiceDeregister(registration.ID).ConfigureAwait(true);

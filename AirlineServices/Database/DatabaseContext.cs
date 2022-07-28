@@ -13,5 +13,7 @@ namespace AirlineServices.Database
 
         }
         public DbSet<Airline> Airline_Master { get; set; }
+
+        public DbSet<AddAirline> Airline_Details { get; set; }
     }
 }

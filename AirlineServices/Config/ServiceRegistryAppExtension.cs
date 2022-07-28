@@ -34,7 +34,7 @@ namespace AirlineServices.Config
             var registration = new AgentServiceRegistration()
             {
                 ID = "AirlineServiceID",
-                Name = "AirlineServiceIDName",
+                Name = "AirlineService",
                 Address = "localhost",
                 Port = 26434,
             };

@@ -6,6 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text;
+using System.Threading;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
 
 namespace Booking.Controllers
 {
@@ -28,6 +32,17 @@ namespace Booking.Controllers
              var    data = _context.Flight_Booking.Where(u => (u.EmailID == UserEmail)).ToList();
             return data;
            
+        }
+
+        [HttpPost("/api/v1.0/flight/booking/AddDiscounts"), AllowAnonymous]
+
+
+        public string AddDiscounts(Discounts discounts)
+        {
+            _context.Discount_Details.Add(discounts);
+            _context.SaveChanges();
+            return "Added Succesfully";
+
         }
 
         [HttpGet("/api/v1.0/flight/booking/GetDiscounts"), AllowAnonymous]
@@ -88,6 +103,15 @@ namespace Booking.Controllers
                 _context.SaveChanges();
 
                 var data = _context.Flight_Booking.ToList().LastOrDefault();
+              
+                var factory = new ConnectionFactory
+                {
+                    Uri = new Uri("amqp://guest:guest@localhost:5672")
+                };
+                using var connection = factory.CreateConnection();
+                using var channel = connection.CreateModel();
+
+                Publish(channel,flight_Bookings.Total_Seats, flight_Bookings.Total_Seats);
                 return data.BookingID;
             }
 
@@ -97,6 +121,25 @@ namespace Booking.Controllers
             }
           
 
+        }
+
+        public static void Publish(IModel channel, int businessseats, int normalseats)
+        {
+            channel.QueueDeclare("demo-queue2",
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
+            var count = 0;
+
+            //while (true)
+            //{
+                var message = new { Name = "Producer", Message = $"{businessseats}"+"," + $"{normalseats}" };
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
+
+                channel.BasicPublish("", "demo-queue2", null, body);
+               
+           // }
         }
 
         [HttpPost("/api/v1.0/flight/Passengers"), AllowAnonymous]

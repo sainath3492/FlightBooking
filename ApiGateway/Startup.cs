@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +30,23 @@ namespace ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddOcelot();
+            services.AddOcelot().AddConsul();
             services.AddConsulConfig();
+            services.AddCors(options =>
+            {
+
+                options.AddPolicy(
+
+                name: "AllowOrigin",
+
+                builder => {
+
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+                });
+
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,9 +57,10 @@ namespace ApiGateway
                 app.UseDeveloperExceptionPage();
                
             }
-
+            app.UseCors("AllowOrigin");
             app.UseOcelot();
             app.UseConsul();
+           
         }
     }
 }

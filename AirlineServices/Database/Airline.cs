@@ -11,7 +11,7 @@ namespace AirlineServices.Database
         [Key]
         public int AirlineID { get; set; }
 
-        public string AirlineName { get; set; }
+        public int FK_AirlineID { get; set; }
 
         public string From_Place { get; set; }
 
@@ -36,14 +36,12 @@ namespace AirlineServices.Database
 
         public string Meal { get; set; }
 
-        public string ContactNumber { get; set; }
-
-        public string ContactAddress { get; set; }
-
-        public string LogoName { get; set; }
+     
         public string TripType { get; set; }
 
         public string FlightStatus { get; set; }
+
+       
     }
 
     public class Status
@@ -58,5 +56,20 @@ namespace AirlineServices.Database
         public int BusinessseatsCount { get; set; }
 
         public int Non_BusinessseatsCount { get; set; }
+    }
+
+    public class AddAirline
+    {
+        [Key]
+        public int AirlineID { get; set; }
+
+        public string AirlineName { get; set; }
+        public string LogoName { get; set; }
+
+        public int Contact_Number { get; set; }
+
+        public string Contact_Address { get; set; }
+
+        public string Status { get; set; }
     }
 }
