@@ -118,6 +118,15 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownStreamPathTemplate": "/api/v1.0/flight/airline/Airline_List",
+      "DownstreamScheme": "http",
+      "ServiceName": "AirlineService",
+      "UseServiceDiscovery": true,
+      "Key": "airlineKey",
+      "UpstreamPathTemplate": "/api/v1.0/flight/airline/Airline_List",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownStreamPathTemplate": "/api/v1.0/flight/airline/register",
       "DownstreamScheme": "http",
       "ServiceName": "AirlineService",

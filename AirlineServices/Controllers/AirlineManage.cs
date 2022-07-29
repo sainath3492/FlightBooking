@@ -20,8 +20,24 @@ namespace AirlineServices.Controllers
         {
             _context = context;
         }
+        [HttpGet("/api/v1.0/flight/airline/Airline_List")]
+        public IEnumerable<AddAirline> Airline_List()
+        {
 
-       
+
+            try
+            {
+                var data = _context.Airline_Details.ToList();
+              
+                return data;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                return null;
+            }
+
+        }
 
         [HttpGet,AllowAnonymous]
      
@@ -152,6 +168,26 @@ namespace AirlineServices.Controllers
 
                 entity.Business_Seats = update.BusinessseatsCount;
                 entity.Non_Business_Seats = update.Non_BusinessseatsCount;
+
+                _context.SaveChanges();
+                return "Updated Succesfully";
+
+            }
+            catch (Exception ex)
+            {
+                return "Internal Server Error";
+            }
+        }
+
+        [HttpGet("/api/v1.0/flight/airline/UpdateMQSeats")]
+        public string UpdateMQSeats(int busineesseats, int nonbusineesseats , int flightid)
+        {
+            try
+            {
+                var entity = _context.Airline_Master.Find(flightid);
+
+                entity.Business_Seats = busineesseats;
+                entity.Non_Business_Seats = nonbusineesseats;
 
                 _context.SaveChanges();
                 return "Updated Succesfully";

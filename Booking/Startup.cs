@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
@@ -71,8 +72,29 @@ namespace Booking
 
 
                         });
+            services.AddCors(options =>
+            {
 
-        
+                options.AddPolicy(
+
+                name: "AllowOrigin",
+
+                builder => {
+
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+                });
+
+            });
+            // var factory = new ConnectionFactory
+            // {
+            //     Uri = new Uri("amqp://guest:guest@localhost:5672")
+            // };
+            // using var connection = factory.CreateConnection();
+            // using var channel = connection.CreateModel();
+
+            //Booking.Controllers.BookingController.Publish(channel, 10, 20);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +111,7 @@ namespace Booking
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseConsul();
-         
+            app.UseCors("AllowOrigin");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

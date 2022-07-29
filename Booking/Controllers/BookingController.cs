@@ -30,6 +30,8 @@ namespace Booking.Controllers
         public IEnumerable<Flight_Bookings> GetFlightBookingsByEmail(string UserEmail )
         {
              var    data = _context.Flight_Booking.Where(u => (u.EmailID == UserEmail)).ToList();
+
+           
             return data;
            
         }
@@ -103,7 +105,6 @@ namespace Booking.Controllers
                 _context.SaveChanges();
 
                 var data = _context.Flight_Booking.ToList().LastOrDefault();
-              
                 var factory = new ConnectionFactory
                 {
                     Uri = new Uri("amqp://guest:guest@localhost:5672")
@@ -111,7 +112,8 @@ namespace Booking.Controllers
                 using var connection = factory.CreateConnection();
                 using var channel = connection.CreateModel();
 
-                Publish(channel,flight_Bookings.Total_Seats, flight_Bookings.Total_Seats);
+                QueueProducer.Publish(channel, flight_Bookings.Total_Seats, flight_Bookings.Total_Seats, flight_Bookings.FlightID);
+
                 return data.BookingID;
             }
 

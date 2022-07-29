@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace AirlineServices
 {
-    public class Startup
+    public class Startup 
     {
         public Startup(IConfiguration configuration)
         {
@@ -74,6 +75,8 @@ namespace AirlineServices
                         });
 
           
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,6 +97,14 @@ namespace AirlineServices
             {
                 endpoints.MapControllers();
             });
+            var factory = new ConnectionFactory
+            {
+                Uri = new Uri("amqp://guest:guest@localhost:5672")
+            };
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            QueueConsumer.Consume(channel);
         }
     }
 }

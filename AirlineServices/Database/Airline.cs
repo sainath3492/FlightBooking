@@ -66,7 +66,7 @@ namespace AirlineServices.Database
         public string AirlineName { get; set; }
         public string LogoName { get; set; }
 
-        public int Contact_Number { get; set; }
+        public string Contact_Number { get; set; }
 
         public string Contact_Address { get; set; }
 
