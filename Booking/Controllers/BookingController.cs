@@ -39,11 +39,12 @@ namespace Booking.Controllers
         [HttpPost("/api/v1.0/flight/booking/AddDiscounts"), AllowAnonymous]
 
 
-        public string AddDiscounts(Discounts discounts)
+        public Discounts AddDiscounts(Discounts discounts)
         {
             _context.Discount_Details.Add(discounts);
             _context.SaveChanges();
-            return "Added Succesfully";
+            var data = _context.Discount_Details.ToList().LastOrDefault();
+            return data;
 
         }
 
@@ -66,11 +67,11 @@ namespace Booking.Controllers
 
         [HttpGet("/api/v1.0/flight/booking/ticket/{pnr}"), AllowAnonymous]
       
-        public IEnumerable<Flight_Bookings> GetFlightBookingsByPNR(int PNR)
+        public IEnumerable<Flight_Bookings> GetFlightBookingsByPNR(string PNR)
         {
             try
             {
-                var data = _context.Flight_Booking.Where(u => (u.BookingID == PNR)).ToList();
+                var data = _context.Flight_Booking.Where(u => (u.PNR == PNR)).ToList();
 
                 return data;
 
@@ -97,14 +98,17 @@ namespace Booking.Controllers
 
         [HttpPost("/api/v1.0/flight/booking"), AllowAnonymous]
      
-        public int SaveBooking(Flight_Bookings flight_Bookings)
+        public Flight_Bookings SaveBooking(Flight_Bookings flight_Bookings)
         {
             try
             {
+                var pnr = DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Millisecond.ToString();
+                flight_Bookings.PNR = pnr;
                 _context.Flight_Booking.Add(flight_Bookings);
                 _context.SaveChanges();
 
                 var data = _context.Flight_Booking.ToList().LastOrDefault();
+
                 var factory = new ConnectionFactory
                 {
                     Uri = new Uri("amqp://guest:guest@localhost:5672")
@@ -112,14 +116,14 @@ namespace Booking.Controllers
                 using var connection = factory.CreateConnection();
                 using var channel = connection.CreateModel();
 
-                QueueProducer.Publish(channel, flight_Bookings.Total_Seats, flight_Bookings.Total_Seats, flight_Bookings.FlightID);
+                QueueProducer.Publish(channel, flight_Bookings.Total_BusinessSeats, flight_Bookings.Total_NonBusinessSeats, flight_Bookings.Flight_ID);
 
-                return data.BookingID;
+                return data;
             }
 
             catch (Exception ex)
             {
-                return 0;
+                return null;
             }
           
 

@@ -39,8 +39,8 @@ namespace AirlineServices
 
                 msg = message.Split(',');
                 queueConsumer.busineesseats = Convert.ToInt32( msg[0].Substring(1));
-                queueConsumer.nonbusineesseats = Convert.ToInt32(msg[1].Substring(0, msg[1].Length-1));
-                queueConsumer.flightid = Convert.ToInt32(msg[2].Substring(0, msg[2].Length - 1));
+                //queueConsumer.nonbusineesseats = Convert.ToInt32(msg[1].Substring(0, msg[1].Length-1));
+                //queueConsumer.flightid = Convert.ToInt32(msg[2].Substring(0, msg[2].Length - 1));
              
                 Console.WriteLine(message);
             };

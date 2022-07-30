@@ -39,6 +39,25 @@ namespace AirlineServices.Controllers
 
         }
 
+        [HttpGet("/api/v1.0/flight/airline/FlightListByID")]
+        public IEnumerable<Airline> FlightListByID(int ID)
+        {
+
+
+            try
+            {
+                var data = _context.Airline_Master.Where(u => (u.FK_AirlineID == ID)).ToList();
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                return null;
+            }
+
+        }
+
         [HttpGet,AllowAnonymous]
      
        
@@ -80,7 +99,7 @@ namespace AirlineServices.Controllers
 
         [HttpPost("/api/v1.0/flight/airline/register"), Authorize(Roles = "Admin")]
        
-        public int register(AddAirline addAirline)
+        public AddAirline register(AddAirline addAirline)
         {
            
 
@@ -89,19 +108,19 @@ namespace AirlineServices.Controllers
                 _context.Airline_Details.Add(addAirline);
                 _context.SaveChanges();
                 var data = _context.Airline_Details.ToList().LastOrDefault();
-                return data.AirlineID;
+                return data;
             }
             catch (Exception ex)
             {
                 string error = ex.Message;
-                return 0;
+                return null;
             }
 
         }
 
         [HttpPost("/api/v1.0/flight/airline/inventory/add"), Authorize(Roles = "Admin")]
     
-        public int add(Airline flight_Bookings)
+        public Airline add(Airline flight_Bookings)
         {
 
             try {
@@ -109,7 +128,7 @@ namespace AirlineServices.Controllers
                 _context.Airline_Master.Add(flight_Bookings);
                 _context.SaveChanges();
                 var data = _context.Airline_Master.ToList().LastOrDefault();
-                return data.AirlineID;
+                return data;
                 //var entity = _context.Airline_Master.Find(flight_Bookings.AirlineID);
 
                 //entity.From_Place = flight_Bookings.From_Place;
@@ -129,7 +148,7 @@ namespace AirlineServices.Controllers
             catch(Exception ex)
             {
                 string error = ex.Message;
-                return 0;
+                return null;
             }
            
 
@@ -147,9 +166,13 @@ namespace AirlineServices.Controllers
 
                 _context.SaveChanges();
 
-
-
-              
+              var  entity1= _context.Airline_Master.Where(u => (u.FK_AirlineID == status.AirlineID)).ToList();
+               for(int i = 0; i < entity1.Count; i++)
+                {
+                    entity1[i].FlightStatus= status.StatusValue;
+                    _context.SaveChanges();
+                }
+               
                 return "Blocked Succesfully";
 
             }

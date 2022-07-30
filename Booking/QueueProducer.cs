@@ -11,7 +11,7 @@ namespace Booking
 {
     public class QueueProducer
     {
-        public static void Publish(IModel channel, int bussinessseats, int normalseats,int Flightid)
+        public static void Publish(IModel channel, int bussinessseats, int normalseats,string Flightid)
         {
             channel.QueueDeclare("demo-queue2",
                 durable: true,
