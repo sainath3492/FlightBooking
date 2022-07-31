@@ -7,20 +7,32 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using AirlineServices.Controllers;
 using AirlineServices.Database;
+using System.Threading;
+using Microsoft.Extensions.Hosting;
 
 namespace AirlineServices
 {
-    public class QueueConsumer
+    public class QueueConsumer: IHostedService
     {
         DatabaseContext _context;
         public int busineesseats;
         public int nonbusineesseats;
         public int flightid;
+        private readonly IModel channel;
+        private readonly IConnectionFactory _factory;
+        private readonly IServiceProvider _serviceProvider;
       
-
-        public static void Consume(IModel channel)
+        public QueueConsumer(IServiceProvider serviceProvider)
         {
-            QueueConsumer queueConsumer = new QueueConsumer();
+            _factory = new ConnectionFactory { Uri = new Uri("amqp://guest:guest@localhost:5672") };
+            _serviceProvider = serviceProvider;
+              channel = _factory.CreateConnection().CreateModel();
+        }
+
+     
+        public  void Consume()
+        {
+          
 
 
             string[] msg;
@@ -38,11 +50,11 @@ namespace AirlineServices
                 var message = Encoding.UTF8.GetString(body);
 
                 msg = message.Split(',');
-                queueConsumer.busineesseats = Convert.ToInt32( msg[0].Substring(1));
-                //queueConsumer.nonbusineesseats = Convert.ToInt32(msg[1].Substring(0, msg[1].Length-1));
-                //queueConsumer.flightid = Convert.ToInt32(msg[2].Substring(0, msg[2].Length - 1));
-             
-                Console.WriteLine(message);
+                busineesseats = Convert.ToInt32( msg[0].Substring(1));
+               nonbusineesseats = Convert.ToInt32(msg[1]);
+                flightid = Convert.ToInt32(msg[2].Substring(0, msg[2].Length - 1));
+
+                new Update(_serviceProvider).updateseats(busineesseats, nonbusineesseats, flightid);
             };
 
             //var entity = QueueConsumer._context.Airline_Master.Find(flightid);
@@ -54,6 +66,17 @@ namespace AirlineServices
             channel.BasicConsume("demo-queue2", true, consumer);
           
 
+        }
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            Consume();
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            Consume();
+            return Task.CompletedTask;
         }
     }
 }

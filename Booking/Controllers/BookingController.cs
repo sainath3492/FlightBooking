@@ -85,12 +85,12 @@ namespace Booking.Controllers
 
         }
 
-        [HttpGet("/api/v1.0/flight/booking/GetPassengerDetails/{BookingID}"), AllowAnonymous]
+        [HttpGet("/api/v1.0/flight/booking/GetPassengerDetails/{PNR}"), AllowAnonymous]
 
 
-        public IEnumerable<Passengers> GetPassengerDetails(int BookingID)
+        public IEnumerable<Passengers> GetPassengerDetails(String PNR)
         {
-            var data = _context.Passenger_Details.Where(u => (u.FK_BookingID == BookingID)).ToList();
+            var data = _context.Passenger_Details.Where(u => (u.PNR == PNR)).ToList();
             return data;
 
         }
@@ -116,7 +116,7 @@ namespace Booking.Controllers
                 using var connection = factory.CreateConnection();
                 using var channel = connection.CreateModel();
 
-                QueueProducer.Publish(channel, flight_Bookings.Total_BusinessSeats, flight_Bookings.Total_NonBusinessSeats, flight_Bookings.Flight_ID);
+                QueueProducer.Publish(channel, flight_Bookings.Total_BusinessSeats, flight_Bookings.Total_NonBusinessSeats, flight_Bookings.Flight_ID.ToString());
 
                 return data;
             }

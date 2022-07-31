@@ -34,9 +34,9 @@ namespace AuthenticationService.Controllers
       
 
         [HttpPost("/api/v1.0/flight/login")]
-        public IEnumerable<UserModel> GetUsers(login login)
+        public IEnumerable<UserModel> GetUsers(NewLogin login)
         {
-            CreatePasswordHash(login.password, out byte[] passwordHash, out byte[] passwordSalt);
+            CreatePasswordHash(login.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             user.UserName = login.UserName;
             user.PasswordHash = passwordHash;
@@ -48,15 +48,15 @@ namespace AuthenticationService.Controllers
             var RefeshToken = GenerateRefreshToken();
             SetRefreshToken(RefeshToken);
         
-            var data = _context.Users.Where(u =>(u.UserName == login.UserName && u.Password== login.password)).Select(u =>
+            var data = _context.Users.Where(u =>(u.UserName == login.UserName && u.Password== login.Password)).Select(u =>
             new UserModel
             {
                 Name = u.Name,
                 UserID = u.UserID,
                 UserName = u.UserName,
                 Role = u.Role,
-                Token= Logintoken
-
+                Token= Logintoken,
+                Email=u.Email
 
             }
             ).ToList();
@@ -69,11 +69,20 @@ namespace AuthenticationService.Controllers
 
         public async Task<ActionResult<User>> Register(login request)
         {
-            CreatePasswordHash(request.password, out byte[] passwordHash, out byte[] passwordSalt);
+           
+          
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            request.PasswordHash = passwordHash.ToString();
+            request.PasswordSalt = passwordSalt.ToString();
+            _context.Users.Add(request);
+            _context.SaveChanges();
+
 
             user.UserName = request.UserName;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.Email = request.Email;
+        
 
             return Ok(user);
 

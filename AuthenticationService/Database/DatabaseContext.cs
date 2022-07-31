@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AuthenticationService.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace AuthenticationService.Database
         {
 
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<login> Users { get; set; }
+
+        //public DbSet<login> users { get; set; }
 
         public DbSet<Role> Roles { get; set; }
 

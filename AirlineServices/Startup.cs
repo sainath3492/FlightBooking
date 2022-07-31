@@ -1,4 +1,5 @@
 using AirlineServices.Config;
+using AirlineServices.Controllers;
 using AirlineServices.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,10 @@ namespace AirlineServices
         {
 
             services.AddControllers();
+
+            services.AddHostedService<QueueConsumer>();
+            services.AddHttpContextAccessor();
+           // services.AddSingleton<Update,Air>
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -97,14 +102,7 @@ namespace AirlineServices
             {
                 endpoints.MapControllers();
             });
-            var factory = new ConnectionFactory
-            {
-                Uri = new Uri("amqp://guest:guest@localhost:5672")
-            };
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
-
-            QueueConsumer.Consume(channel);
+           
         }
     }
 }

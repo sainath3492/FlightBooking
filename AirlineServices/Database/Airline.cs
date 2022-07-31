@@ -41,7 +41,9 @@ namespace AirlineServices.Database
 
         public string FlightStatus { get; set; }
 
-       
+        public string Airline_Name { get; set; }
+
+
     }
 
     public class Status
