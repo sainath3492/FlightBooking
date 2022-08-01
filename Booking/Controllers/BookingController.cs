@@ -98,7 +98,7 @@ namespace Booking.Controllers
 
         [HttpPost("/api/v1.0/flight/booking"), AllowAnonymous]
      
-        public Flight_Bookings SaveBooking(Flight_Bookings flight_Bookings)
+        public IEnumerable<Flight_Bookings> SaveBooking(Flight_Bookings flight_Bookings)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace Booking.Controllers
                 _context.Flight_Booking.Add(flight_Bookings);
                 _context.SaveChanges();
 
-                var data = _context.Flight_Booking.ToList().LastOrDefault();
+                var data = _context.Flight_Booking.Where(u => (u.PNR == pnr)).ToList();
 
                 var factory = new ConnectionFactory
                 {

@@ -36,33 +36,42 @@ namespace AuthenticationService.Controllers
         [HttpPost("/api/v1.0/flight/login")]
         public IEnumerable<UserModel> GetUsers(NewLogin login)
         {
-            CreatePasswordHash(login.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            user.UserName = login.UserName;
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
-          
-            string Logintoken = CreateToken(user);
-
-            var RefeshToken = GenerateRefreshToken();
-            SetRefreshToken(RefeshToken);
-        
-            var data = _context.Users.Where(u =>(u.UserName == login.UserName && u.Password== login.Password)).Select(u =>
-            new UserModel
+            try
             {
-                Name = u.Name,
-                UserID = u.UserID,
-                UserName = u.UserName,
-                Role = u.Role,
-                Token= Logintoken,
-                Email=u.Email
+                CreatePasswordHash(login.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
+                user.UserName = login.UserName;
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+
+
+                string Logintoken = CreateToken(user);
+
+                var RefeshToken = GenerateRefreshToken();
+                SetRefreshToken(RefeshToken);
+
+                var data = _context.Users.Where(u => (u.UserName == login.UserName && u.Password == login.Password)).Select(u =>
+                  new UserModel
+                  {
+                      Name = u.Name,
+                      UserID = u.UserID,
+                      UserName = u.UserName,
+                      Role = u.Role,
+                      Token = Logintoken,
+                      Email = u.Email
+
+                  }
+                ).ToList();
+
+                data[0].Token = Logintoken;
+                return data;
             }
-            ).ToList();
-
-            data[0].Token = Logintoken;
-            return data;
+            catch(Exception ex)
+            {
+                return null;
+            }
+          
         }
 
         [HttpPost("/api/v1.0/flight/login/register")]

@@ -1,12 +1,15 @@
 ﻿using AirlineServices.Database;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace AirlineServices.Controllers
 {
@@ -105,6 +108,21 @@ namespace AirlineServices.Controllers
 
             try
             {
+
+
+                string[] filedata = addAirline.Logoimage.Split(",");
+                byte[] imageBytes = Convert.FromBase64String(filedata[1]);
+
+                //Save the Byte Array as Image File.
+                string filePath = "C:/Users/cogdotnet1094/source/repos/FlightServices/src/FileUpload/" + addAirline.AirlineName+".png";
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                
+                System.IO.File.WriteAllBytes(filePath, imageBytes);
+
+               // File.WriteAllBytes(filePath, imageBytes);
                 _context.Airline_Details.Add(addAirline);
                 _context.SaveChanges();
                 var data = _context.Airline_Details.ToList().LastOrDefault();
