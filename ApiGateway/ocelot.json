@@ -12,7 +12,7 @@
       //    "Port": 47363
       //  }
       //],
-
+    
       "UpstreamPathTemplate": "/api/v1.0/flight/booking/history",
       "UpstreamHttpMethod": [ "GET" ]
     },
@@ -159,7 +159,10 @@
       "DownstreamScheme": "http",
       "ServiceName": "AirlineService",
       "UseServiceDiscovery": true,
-
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "GatewayAuthenticationKey",
+      //  "AllowedScopes": []
+      //},
       "Key": "airlineKey",
       "UpstreamPathTemplate": "/api/v1.0/flight/airline/BlockAirline",
       "UpstreamHttpMethod": [ "POST" ]
