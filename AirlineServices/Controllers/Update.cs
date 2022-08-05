@@ -20,7 +20,7 @@ namespace AirlineServices.Controllers
             _context = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<DatabaseContext>();
             
         }
-
+        [HttpGet("/api/v1.0/flight/airline/updateseats")]
         public string updateseats( int busineesseats,int nonbusineesseats,int flightid)
         {
             var entity = _context.Airline_Master.Find(flightid);

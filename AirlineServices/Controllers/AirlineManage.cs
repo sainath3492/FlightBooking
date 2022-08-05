@@ -114,15 +114,15 @@ namespace AirlineServices.Controllers
                 byte[] imageBytes = Convert.FromBase64String(filedata[1]);
 
                 //Save the Byte Array as Image File.
-                string filePath = "C:/Users/cogdotnet1094/source/repos/FlightServices/src/FileUpload/" + addAirline.AirlineName+".png";
+                string filePath = "C:/Users/cogdotnet1094/source/repos/FlightServices/src/FileUpload/" + addAirline.AirlineName + ".png";
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
                 }
-                
+
                 System.IO.File.WriteAllBytes(filePath, imageBytes);
 
-               // File.WriteAllBytes(filePath, imageBytes);
+                //File.WriteAllBytes(filePath, imageBytes);
                 _context.Airline_Details.Add(addAirline);
                 _context.SaveChanges();
                 var data = _context.Airline_Details.ToList().LastOrDefault();
